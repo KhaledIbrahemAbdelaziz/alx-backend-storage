@@ -9,16 +9,14 @@ import uuid
 class Cache:
     """Implements the cache class"""
     def __init__(self):
-        """Initializes the attributes in the class"""
+        """Initializes the attributes of the Redis client."""
         self._redis = redis.Redis()
         self._redis.flushdb()
 
     @call_history
     @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
-        """generate a random key (e.g. using uuid),
-        store the input data in Redis using the random key
-        and return the key."""
+        """Takes and stores a data argument and returns a string."""
         keys = str(uuid.uuid4())
-        self._redis.mset({key: data})
+        self._redis.mset({keys: data})
         return keys
